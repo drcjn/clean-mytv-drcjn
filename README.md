@@ -55,7 +55,7 @@ brew install openjdk@17
 brew install --cask android-commandlinetools
 sdkmanager "platforms;android-34" "build-tools;34.0.0"
 
-git clone --branch v1.0 https://github.com/drcjn/clean-mytv-drcjn   # a reviewed release, not whatever is newest
+git clone --branch v1.1 https://github.com/drcjn/clean-mytv-drcjn   # a reviewed release, not whatever is newest
 cd clean-mytv-drcjn
 python3 install.py --dry-run     # look first: shows the plan, changes nothing on the TV
 python3 install.py               # the real thing
@@ -141,8 +141,9 @@ python3 -m venv .venv && .venv/bin/pip install pillow
 
 ## Credits and licences
 
-* [CleanYourTV](https://github.com/Gathin23/cleanyourtv) by Gathin23: the debloat lists, ADB tools and launcher (downloaded at
-  install time, pinned to a tested commit, not copied here). See its repository for its licence.
+* [CleanYourTV](https://github.com/Gathin23/cleanyourtv) by Gathin23 (MIT): the debloat lists, ADB tools and launcher. They are
+  downloaded at install time, pinned to a tested commit, from [our fork](https://github.com/drcjn/cleanyourtv) (so a deleted
+  original cannot break installs), with the original as a fallback. Not copied into this repository.
 * [iptv-org](https://github.com/iptv-org/iptv) playlists and [Televizo](https://play.google.com/store/apps/details?id=com.ottplay.ottplay): their owners' terms apply.
 * [dadb](https://github.com/mobile-dev-inc/dadb) (Apache-2.0) in the Close Apps helper.
 * This repository: MIT, see [LICENSE](LICENSE). Use at your own risk; you are changing your own TV.

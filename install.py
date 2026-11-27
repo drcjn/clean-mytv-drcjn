@@ -22,7 +22,8 @@ ROOT = Path(__file__).resolve().parent
 sys.path.insert(0, str(ROOT / "tools"))
 import playlists  # noqa: E402
 
-UPSTREAM_URL = "https://github.com/Gathin23/cleanyourtv"
+UPSTREAM_URL = "https://github.com/drcjn/cleanyourtv"            # our fork of CleanYourTV (a safe copy)
+UPSTREAM_FALLBACK_URL = "https://github.com/Gathin23/cleanyourtv"  # the original, used only if the fork is unreachable
 UPSTREAM_REF = "be6087056a1c7d4f08f3f1cc778d92374d86ef27"   # tested commit; change deliberately, not automatically
 UP = ROOT / "upstream"
 PY = UP / "tools" / "venv" / "bin" / "python"
@@ -159,7 +160,12 @@ def preflight():
 def setup_upstream(dry):
     if not UP.exists():
         print("  downloading CleanYourTV (pinned %s)" % UPSTREAM_REF[:8])
-        subprocess.run(["git", "clone", "-q", UPSTREAM_URL, str(UP)], check=True)
+        for url in (UPSTREAM_URL, UPSTREAM_FALLBACK_URL):
+            if subprocess.run(["git", "clone", "-q", url, str(UP)]).returncode == 0:
+                break
+            shutil.rmtree(UP, ignore_errors=True)
+        else:
+            sys.exit("could not download CleanYourTV from %s or %s" % (UPSTREAM_URL, UPSTREAM_FALLBACK_URL))
     subprocess.run(["git", "-C", str(UP), "checkout", "-q", UPSTREAM_REF], check=True)
     if not PY.exists():
         print("  creating Python environment")
