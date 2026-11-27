@@ -2,6 +2,8 @@
 
 Make a slow Android TV / Google TV fast and clean, **over Wi-Fi, in one wizard**:
 
+* keeps **Chromecast** and the **Wireless Display (Miracast)** receiver, so you can cast or mirror a phone to the TV
+  (`--disable-miracast` turns the receiver off to save memory)
 * removes the manufacturer's ads, telemetry and background junk (they are **disabled, never uninstalled**)
 * replaces the cluttered home screen with a simple one: a dock of a few streaming apps, an app grid, HDMI/USB inputs
 * puts **your own photos** behind it as a rotating wallpaper and screensaver
@@ -55,7 +57,7 @@ brew install openjdk@17
 brew install --cask android-commandlinetools
 sdkmanager "platforms;android-34" "build-tools;34.0.0"
 
-git clone --branch v1.1 https://github.com/drcjn/clean-mytv-drcjn   # a reviewed release, not whatever is newest
+git clone --branch v1.2 https://github.com/drcjn/clean-mytv-drcjn   # a reviewed release, not whatever is newest
 cd clean-mytv-drcjn
 python3 install.py --dry-run     # look first: shows the plan, changes nothing on the TV
 python3 install.py               # the real thing

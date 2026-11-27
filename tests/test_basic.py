@@ -30,6 +30,11 @@ class Helpers(unittest.TestCase):
         self.assertTrue(lines[1].startswith("# kept"))
         self.assertTrue(lines[3].startswith("# kept"))
 
+    def test_filter_list_miracast(self):
+        lst = "com.xiaomi.mitv.smartshare\ncom.sonyliv\n"
+        self.assertTrue(install.filter_list(lst).splitlines()[0].startswith("# kept"))
+        self.assertEqual(install.filter_list(lst, keep_miracast=False).splitlines()[0], "com.xiaomi.mitv.smartshare")
+
     def test_find_example(self):
         with tempfile.TemporaryDirectory() as t:
             for n in ["xiaomi-mitv-axfr1", "xiaomi-mitv-axfr2", "tcl-55p71b"]:

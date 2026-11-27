@@ -40,6 +40,7 @@ DEFAULT_APPS = [
 ]
 TELEVIZO = playlists.TELEVIZO
 PROTECTED = {p for _, p in DEFAULT_APPS} | {TELEVIZO, "com.google.android.apps.mediashell"}  # never disabled; mediashell = Chromecast
+MIRACAST = {"com.xiaomi.mitv.smartshare", "com.xiaomi.wfdsinkhelperservice"}  # Wireless Display receiver (Xiaomi); kept by default
 STEPS = ["apps", "debloat", "launcher", "theme", "closeapps", "playlists"]
 
 
@@ -89,12 +90,13 @@ def find_example(model, examples_dir):
     return sorted(hits, key=lambda d: len(d.name))
 
 
-def filter_list(text):
-    """Drop the lines that would disable our default apps or Chromecast; keep everything else (and comments)."""
+def filter_list(text, keep_miracast=True):
+    """Drop the lines that would disable our default apps, Chromecast or (by default) the Miracast receiver."""
+    protected = PROTECTED | MIRACAST if keep_miracast else PROTECTED
     out = []
     for line in text.splitlines():
         pkg = line.split("#")[0].strip()
-        if pkg and pkg in PROTECTED:
+        if pkg and pkg in protected:
             out.append("# kept by clean-mytv: " + line.strip())
         else:
             out.append(line)
@@ -242,7 +244,7 @@ def step_debloat(c, probe):
                       ("getprop.txt", "getprop")]:
         (BACKUP / name).write_text(c.tv(cmd, mutate=False))
     filtered = BACKUP / "debloat-applied.txt"
-    filtered.write_text(filter_list(src.read_text()))
+    filtered.write_text(filter_list(src.read_text(), keep_miracast=not c.a.disable_miracast))
     n = sum(1 for l in filtered.read_text().splitlines() if l.split("#")[0].strip())
     print("  %d packages will be DISABLED (not uninstalled); backup + restore list in %s" % (n, BACKUP))
     c.script([UP / "tools" / "disable.sh", filtered])
@@ -344,6 +346,7 @@ def main(argv=None):
     ap.add_argument("--countries", help="e.g. 'India, USA, Korea'")
     ap.add_argument("--genres", help="e.g. 'movies, music, kids'")
     ap.add_argument("--close-apps", help="package names the Close Apps helper manages (default: the dock apps + Televizo)")
+    ap.add_argument("--disable-miracast", action="store_true", help="also disable the Wireless Display (Miracast) receiver (kept by default)")
     ap.add_argument("--list", help="your own debloat list (one package per line) instead of the tested one")
     ap.add_argument("--only", help="comma-separated parts to run: " + ",".join(STEPS))
     ap.add_argument("--dry-run", action="store_true", help="show the plan; change nothing on the TV")
