@@ -55,7 +55,7 @@ brew install openjdk@17
 brew install --cask android-commandlinetools
 sdkmanager "platforms;android-34" "build-tools;34.0.0"
 
-git clone https://github.com/drcjn/clean-mytv-drcjn
+git clone --branch v1.0 https://github.com/drcjn/clean-mytv-drcjn   # a reviewed release, not whatever is newest
 cd clean-mytv-drcjn
 python3 install.py --dry-run     # look first: shows the plan, changes nothing on the TV
 python3 install.py               # the real thing
