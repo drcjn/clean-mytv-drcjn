@@ -16,6 +16,20 @@ Built and tested on a Xiaomi Mi TV 4A (MiTV-AXFR1, Android TV 11, 1 GB RAM). It 
 > **Your photos stay yours.** They are processed on your computer and copied only to your TV. Nothing is uploaded, and
 > this repository contains no personal photos, names or addresses.
 
+## The key feature: Close Apps (auto-close)
+
+A 1 GB TV runs out of memory when Netflix, YouTube and Prime sit in the background together, and that is what makes
+it crawl. **Close Apps** fixes that automatically:
+
+* **Automatic:** open any one of your streaming apps and the others are closed in the background about 2 seconds later.
+  It never touches the app on screen or Chromecast.
+* **One-press tile:** a red **Close Apps** tile on Home closes them all on demand.
+* **Independent of your computer:** a small helper app on the TV starts the watcher at every boot, so you never run a
+  command again. (Source in [`closeapps/`](closeapps/), the watcher is [`autoclose.sh`](closeapps/app/src/main/assets/autoclose.sh).)
+
+In testing on a Xiaomi Mi TV 4A (1 GB RAM), opening Netflix after YouTube closed YouTube's process every time, and
+free memory stayed noticeably higher. It needs the TV's network debugging to stay on (see below).
+
 ## What the wizard asks
 
 | # | Question | Used for |
