@@ -1,0 +1,10 @@
+plugins { id 'com.android.application' }
+android {
+    namespace 'tv.closeapps'
+    compileSdk 34
+    defaultConfig { applicationId 'tv.closeapps'; minSdk 26; targetSdk 34; versionCode 1; versionName '1.0' }
+    buildTypes { release { minifyEnabled false; signingConfig signingConfigs.debug } }
+    compileOptions { sourceCompatibility JavaVersion.VERSION_17; targetCompatibility JavaVersion.VERSION_17 }
+    packagingOptions { resources { excludes += ['META-INF/*.version', 'META-INF/*.kotlin_module', 'DebugProbesKt.bin'] } }
+}
+dependencies { implementation 'dev.mobile:dadb:1.2.10' }

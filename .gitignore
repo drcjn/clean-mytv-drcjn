@@ -1,0 +1,14 @@
+# never commit anything personal or generated
+upstream/
+backup/
+out/
+shots/
+*.apk
+.venv/
+__pycache__/
+closeapps/local.properties
+closeapps/build/
+closeapps/app/build/
+closeapps/.gradle/
+.DS_Store
+theme-overrides.json
